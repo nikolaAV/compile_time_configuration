@@ -1,6 +1,3 @@
-# Prerequisites
-*.d
-
 # Compiled Object files
 *.slo
 *.lo
@@ -30,3 +27,18 @@
 *.exe
 *.out
 *.app
+
+# Visual Studio temp/user files
+*.user
+*.suo
+*.sdf
+*.opensdf
+*.ncb
+.vs
+
+# Build output directories
+Release
+Debug
+MinSizeRel
+RelWithDebInfo
+ipch
