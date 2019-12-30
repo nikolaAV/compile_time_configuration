@@ -1,8 +1,6 @@
-#include <type_traits>
-#include <utility>
-#include <cstdlib>
-
-#include "literal_types.h"
+#include <string>
+#include <iostream>
+#include "tag_types.h"
 
 /*
     g++ main.cpp -std=c++14 -o exe
@@ -10,17 +8,42 @@
 
 // Example of usage
 
-#include <string>
-#include <iostream>
+using namespace tag;
+
+using configuration = tl::list<
+    node<
+       name<SL("warping_control")>
+      ,lib <SL("libwarping_control_logic.so")>
+      ,communication<
+          inputs<>
+         ,outputs<>
+      >
+    >
+//   ,
+>;
+
+struct test : configuration {};
+
+struct ggg :     node<
+       name<SL("warping_control")>
+      ,lib <SL("libwarping_control_logic.so")>
+      ,communication<
+          inputs<>
+         ,outputs<>
+      >
+    > {};
+
 
 using namespace std;
 
 
+
 int main()
 {
-   cout << STYPE("another string")::value() << endl;
-   cout << DTYPE("12345")::value() << endl;
-   cout << XTYPE("0ABcdEf")::value() << endl;
-   cout << FTYPE("0X1.BC70A3D70A3D7P+6")::value() << endl;
+
+   cout << SL("another string")::value() << endl;
+   cout << DL("12345")::value() << endl;
+   cout << XL("0ABcdEf")::value() << endl;
+   cout << FL("0X1.BC70A3D70A3D7P+6")::value() << endl;
    cin.get();
 }

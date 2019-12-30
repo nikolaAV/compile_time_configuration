@@ -1,6 +1,7 @@
 #pragma once
 
 #include "char_traits.h"
+#include <cstdlib>
 
 // clang-format off
 
@@ -63,9 +64,9 @@ template <typename T, T... chars>
 constexpr literal::fdigit_sequence<chars...> operator""_fs() { return { }; }
 
 
-#define STYPE(s) decltype("" s ""_cs)
-#define DTYPE(s) decltype("" s ""_ds)
-#define XTYPE(s) decltype("" s ""_xs)
-#define FTYPE(s) decltype("" s ""_fs)
+#define SL(s) decltype("" s ""_cs)
+#define DL(s) decltype("" s ""_ds)
+#define XL(s) decltype("" s ""_xs)
+#define FL(s) decltype("" s ""_fs)
 
 // clang-format on
