@@ -44,6 +44,11 @@ struct fdigit_sequence : char_sequence<chars...> {
 
 }   // namespace literal
 
+/**
+    String literals as non-type template parameters
+    To be implemented it uses Gcc extension. 
+    @see https://github.com/nikolaAV/skeleton/tree/master/literal_string_type
+*/
 
 template <typename T, T... chars>
 constexpr literal::char_sequence<chars...> operator""_cs() { return { }; }
