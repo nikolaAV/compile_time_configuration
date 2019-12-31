@@ -11,7 +11,7 @@
 using namespace tag;
 
 using configuration = tl::list<
-    node<
+    anode<
          name<SL("warping_control")>
         ,lib <SL("libwarping_control_logic.so")>
         ,config<
@@ -36,7 +36,7 @@ using configuration = tl::list<
             ,outputs<>
         >
     >
-   ,node<
+   ,anode<
          name<SL("virtual_camera")>
         ,lib <SL("libvirtual_camera_logic.so")>
         ,config<
@@ -49,6 +49,23 @@ using configuration = tl::list<
         ,communication<
             inputs<>
             ,outputs<SL("eye_box_settings_changed_out")>
+        >
+   >
+   ,anode<
+         name<SL("fas_cluster_acc")>
+        ,lib <SL("libfas_cluster_acc_logic.so")>
+        ,config<
+             scene<SL("StaticScene")>
+            ,node<SL("fasc")>
+            ,nodes_show_hide<
+                 nshe<scene<SL("StaticScene")>,node<SL("warn_acc_tor_sl")>,ar<BL("false")>>
+                ,nshe<scene<SL("ArScene")>,node<SL("warn_acc_tor_ar1")>,ar<BL("true")>>
+                ,nshe<scene<SL("ArScene")>,node<SL("warn_acc_tor_ar2")>,ar<BL("true")>>
+            >
+        >
+        ,communication<
+             inputs<>
+            ,outputs<SL("acc_fas_cluster_on_off"),SL("acc_fas_cluster_hide_show_sl"),SL("acc_fas_cluster_hide_show_ar"), SL("acc_fas_cluster_pea_hidden_shown"), SL("acc_fas_cluster_pea_radar_waves_hidden_shown")>
         >
    >
 >;

@@ -43,6 +43,18 @@ namespace char_traits
       >{
    };
 
+   template <char ch>
+   struct is_boolean_sign : std::conditional_t< 
+         ch == 'F' || ch == 'A' || ch == 'L' || ch == 'S' || ch == 'E' ||
+         ch == 'f' || ch == 'a' || ch == 'l' || ch == 's' || ch == 'e' ||
+         ch == 'T' || ch == 'R' || ch == 'U' || 
+         ch == 't' || ch == 'r' || ch == 'u' 
+         ,std::true_type
+         ,std::false_type
+      >{
+   };
+
+
    template <char ch, char... chars>
    struct is_digits {
       static constexpr bool value = is_digits<ch>::value && is_digits<chars...>::value;
@@ -69,6 +81,15 @@ namespace char_traits
    template <char ch>
    struct is_floating_point_digits<ch> {
       static constexpr bool value = is_xdigit<ch>::value || is_floating_point_sign<ch>::value;
+   };
+
+   template <char ch, char... chars>
+   struct is_boolean_digits {
+      static constexpr bool value = is_boolean_digits<ch>::value && is_boolean_digits<chars...>::value;
+   };
+
+   template <char ch>
+   struct is_boolean_digits<ch> : is_boolean_sign<ch> {
    };
 
 } // char_traits namespace

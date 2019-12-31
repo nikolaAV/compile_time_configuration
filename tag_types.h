@@ -28,6 +28,16 @@ namespace tag
     };
 
     template <typename T>
+    struct node {
+        using type = T;
+    };
+
+    template <typename T>
+    struct ar {
+        using type = T;
+    };
+
+    template <typename T>
     struct mat_div_factor {
         using type = T;
     };
@@ -58,6 +68,21 @@ namespace tag
     template <typename T>
     struct scene {
         using type = T;
+    };
+
+    template <typename T, typename U, typename H>
+    struct nshe; // nodes_show_hide_element
+    
+    template <typename T, typename U, typename H>
+    struct nshe<scene<T>, node<U>, ar<H>> {
+        using scene_type = T;
+        using node_type = U;
+        using ar_type = H;
+    };
+
+    template <typename... Nshes>
+    struct nodes_show_hide {
+        using type = tl::list<Nshes...>;
     };
 
     template <typename T>
@@ -115,10 +140,10 @@ namespace tag
     };
 
     template <typename Name, typename Lib, typename Config, typename Communication>
-    struct node;
+    struct anode;
 
     template <typename T, typename U, typename I, typename O, typename... Hs>
-    struct node<name<T>,lib<U>,config<Hs...>,communication<I,O>> {
+    struct anode<name<T>,lib<U>,config<Hs...>,communication<I,O>> {
         using name_type = T;
         using lib_type = U;
         using config_type = typename config<Hs...>::type;

@@ -43,6 +43,19 @@ struct fdigit_sequence : char_sequence<chars...> {
     }
 };
 
+template <char... chars>
+struct bdigit_sequence : char_sequence<chars...> { 
+    static_assert(char_traits::is_boolean_digits<chars...>::value,"char is not a boolean digit sign");
+    static bool value() {
+        using base_type = char_sequence<chars...>;
+        if(std::is_same<char_sequence<'T','R','U','E'>,base_type>::value)
+            return true;
+        if(std::is_same<char_sequence<'t','r','u','e'>,base_type>::value)
+            return true;
+        return false;    
+    }
+};
+
 }   // namespace literal
 
 /**
@@ -63,10 +76,13 @@ constexpr literal::xdigit_sequence<chars...> operator""_xs() { return { }; }
 template <typename T, T... chars>
 constexpr literal::fdigit_sequence<chars...> operator""_fs() { return { }; }
 
+template <typename T, T... chars>
+constexpr literal::bdigit_sequence<chars...> operator""_bs() { return { }; }
 
 #define SL(s) decltype("" s ""_cs)
 #define DL(s) decltype("" s ""_ds)
 #define XL(s) decltype("" s ""_xs)
 #define FL(s) decltype("" s ""_fs)
+#define BL(s) decltype("" s ""_bs)
 
 // clang-format on
