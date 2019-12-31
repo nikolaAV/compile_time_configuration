@@ -60,9 +60,12 @@ struct visitor {
     template <typename T>
     void operator()(T*) {
         using node_type = T;
-        using name_type = tl::front_t<typename node_type::list_type>;
-        using value_type = tl::front_t<typename name_type::list_type>;
-        cout << value_type::value() << endl;
+        using name_type = typename node_type::name_type;
+        using lib_type = typename node_type::lib_type;
+        using config_type = typename node_type::config_type;
+        using communication_type = typename node_type::communication_type;
+
+        cout << name_type::value() << ", " << lib_type::value() << endl;
     }
 };
 
