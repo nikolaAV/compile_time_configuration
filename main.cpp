@@ -56,12 +56,20 @@ using configuration = tl::list<
 using namespace std;
 
 
+struct visitor {
+    template <typename T>
+    void operator()(T*) {
+        using node_type = T;
+        using name_type = tl::front_t<typename node_type::list_type>;
+        using value_type = tl::front_t<typename name_type::list_type>;
+        cout << value_type::value() << endl;
+    }
+};
+
 int main()
 {
+    tl::rt::for_each<configuration>(visitor{});
 
-   cout << SL("another string")::value() << endl;
-   cout << DL("12345")::value() << endl;
-   cout << XL("0ABcdEf")::value() << endl;
-   cout << FL("0X1.BC70A3D70A3D7P+6")::value() << endl;
-   cin.get();
+
+    cin.get();
 }

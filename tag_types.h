@@ -38,7 +38,9 @@ namespace tag
     struct scene : tl::list<T> {};
 
     template <typename T>
-    struct name : tl::list<T> {};
+    struct name : tl::list<T> {
+        using list_type = tl::list<T>;
+    };
 
     template <typename T>
     struct lib : tl::list<T> {};
@@ -80,6 +82,7 @@ namespace tag
 
     template <typename T, typename U, typename I, typename O, typename... Hs>
     struct node<name<T>,lib<U>,config<Hs...>,communication<I,O>> : tl::list<name<T>,lib<U>,config<Hs...>,communication<I,O>> {
+        using list_type = tl::list<name<T>,lib<U>,config<Hs...>,communication<I,O>>;
     }; 
 
 }   // tag namespace
