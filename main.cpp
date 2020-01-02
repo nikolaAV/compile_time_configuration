@@ -3,7 +3,11 @@
 #include "tag_types.h"
 
 /*
-    g++ main.cpp -std=c++14 -o exe
+    g++ main.cpp 
+        logics/AccFasClusterLogic/CAccFasClusterLogic.cpp
+        logics/VirtualCameraLogic/CVirtualCameraLogic.cpp 
+        logics/WarpingControlLogic/CWarpingControlLogic.cpp 
+        -std=c++14 -o exe
 */
 
 // Example of usage
