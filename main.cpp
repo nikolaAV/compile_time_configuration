@@ -1,13 +1,14 @@
 #include <string>
 #include <iostream>
 #include "tag_types.h"
+#include "loader.h"
 
 /*
-    g++ main.cpp 
+    g++ main.cpp
         logics/AccFasClusterLogic/CAccFasClusterLogic.cpp
         logics/VirtualCameraLogic/CVirtualCameraLogic.cpp 
-        logics/WarpingControlLogic/CWarpingControlLogic.cpp 
-        -std=c++14 -o exe
+        logics/WarpingControlLogic/CWarpingControlLogic.cpp
+        -std=c++14
 */
 
 // Example of usage
@@ -74,26 +75,9 @@ using configuration = tl::list<
    >
 >;
 
-using namespace std;
-
-
-struct visitor {
-    template <typename T>
-    void operator()(T*) {
-        using node_type = T;
-        using name_type = typename node_type::name_type;
-        using lib_type = typename node_type::lib_type;
-        using config_type = typename node_type::config_type;
-        using communication_type = typename node_type::communication_type;
-
-        cout << name_type::value() << ", " << lib_type::value() << endl;
-    }
-};
-
 int main()
 {
-    tl::rt::for_each<configuration>(visitor{});
-
-
-    cin.get();
+    LCE::InterfaceAccessor::InterfaceAccessorPtr dummy{};
+    LogicLoader<configuration> loader{dummy};
+    auto logics = loader();
 }
