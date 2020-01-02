@@ -2,10 +2,11 @@
 
 // clang-format off
 
-#include "tag_types.h"
-#include "logics/include/IBusinessLogic.hpp"
-#include "logics/include/IInterfaceAccessor.hpp"
 #include <vector>
+#include "tag_types.h"
+#include "logics/AccFasClusterLogic/CAccFasClusterLogic.hpp"
+#include "logics/VirtualCameraLogic/CVirtualCameraLogic.hpp"
+#include "logics/WarpingControlLogic/CWarpingControlLogic.hpp"
 
 using BusinessLogicPtr = LCE::Logic::BusinessLogicPtr;
 using BusinessLogics = std::vector<BusinessLogicPtr>;
@@ -22,8 +23,14 @@ public:
 
     template <typename ANode>
     static BusinessLogicPtr process(SL("warping_control"),const InterfaceAccessorPtr& p) {
-        using lib_type = typename ANode::lib_type;
-        std::cout << lib_type::value() << std::endl;
+        using config_type = typename ANode::config_type;
+        using static_zone_type = tl::nth_element_t<config_type,0>;
+        using ar_zone_type = tl::nth_element_t<config_type,1>;
+        using mat_div_factor_type = typename tl::nth_element_t<config_type,2>::type;
+        using mirror_angle_min_type = typename tl::nth_element_t<config_type,3>::type;
+        using mirror_angle_max_type = typename tl::nth_element_t<config_type,4>::type;
+
+        using sz_name_type = typename static_zone_type::name_type;
         return {};
     }
 
