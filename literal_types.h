@@ -14,6 +14,9 @@ struct char_sequence : std::integer_sequence<char, chars...> {
         static constexpr char str[sizeof...(chars) + 1] = { chars..., '\0' };
         return str;
     }
+    operator const char*() const {
+        return value();
+    }
 };
 
 template <char... chars>
@@ -22,6 +25,9 @@ struct digit_sequence : char_sequence<chars...> {
     static long value() {
         char* end{};
         return std::strtol(char_sequence<chars...>::value(), &end, 10);
+    }
+    operator long() const {
+        return value();
     }
 };
 
@@ -32,6 +38,9 @@ struct xdigit_sequence : char_sequence<chars...> {
         char* end{};
         return std::strtol(char_sequence<chars...>::value(), &end, 16);
     }
+    operator long() const {
+        return value();
+    }
 };
 
 template <char... chars>
@@ -40,6 +49,9 @@ struct fdigit_sequence : char_sequence<chars...> {
     static double value() {
         char* end{};
         return std::strtod(char_sequence<chars...>::value(), &end);
+    }
+    operator double() const {
+        return value();
     }
 };
 
@@ -53,6 +65,9 @@ struct bdigit_sequence : char_sequence<chars...> {
         if(std::is_same<char_sequence<'t','r','u','e'>,base_type>::value)
             return true;
         return false;    
+    }
+    operator bool() const {
+        return value();
     }
 };
 
