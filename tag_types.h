@@ -43,13 +43,37 @@ namespace tag
     };
 
     template <typename T>
+    struct is_mat_div_factor : std::false_type {  
+    };
+
+    template <typename T>
+    struct is_mat_div_factor<mat_div_factor<T>> : std::true_type {  
+    };
+
+    template <typename T>
     struct mirror_angle_min {
         using type = T;
     };
 
     template <typename T>
+    struct is_mirror_angle_min : std::false_type {  
+    };
+
+    template <typename T>
+    struct is_mirror_angle_min<mirror_angle_min<T>> : std::true_type {  
+    };
+
+    template <typename T>
     struct mirror_angle_max {
         using type = T;
+    };
+
+    template <typename T>
+    struct is_mirror_angle_max : std::false_type {  
+    };
+
+    template <typename T>
+    struct is_mirror_angle_max<mirror_angle_max<T>> : std::true_type {  
     };
 
     template <typename T, typename U, typename H>
@@ -130,14 +154,44 @@ namespace tag
     struct static_zone : zone<T,U,H,G> {
     };
 
+    template <typename T>
+    struct is_static_zone : std::false_type {  
+    };
+
+    template <typename T, typename U, typename H, typename G>
+    struct is_static_zone<static_zone<T,U,H,G>> : std::true_type {  
+    };
+
     template <typename T, typename U, typename H, typename G>
     struct ar_zone : zone<T,U,H,G> {
+    };
+
+    template <typename T>
+    struct is_ar_zone : std::false_type {  
+    };
+
+    template <typename T, typename U, typename H, typename G>
+    struct is_ar_zone<ar_zone<T,U,H,G>> : std::true_type {  
     };
 
     template <typename... Ts>
     struct config {
         using type = tl::list<Ts...>;
     };
+
+    template <typename Config, template <typename> class Condition>
+    struct get;
+
+    template <template <typename> class Condition, typename... Ts>
+    struct get<config<Ts...>,Condition> {
+        using type = tl::front_t<tl::find_if_t<typename config<Ts...>::type, Condition>>;
+    };
+
+    template <typename TList, template <typename> class Condition>
+    using get_t = typename get<TList,Condition>::type;
+
+    template <typename TList, template <typename> class Condition>
+    using get_tt = typename get_t<TList,Condition>::type;
 
     template <typename Name, typename Lib, typename Config, typename Communication>
     struct anode;
@@ -146,7 +200,7 @@ namespace tag
     struct anode<name<T>,lib<U>,config<Hs...>,communication<I,O>> {
         using name_type = T;
         using lib_type = U;
-        using config_type = typename config<Hs...>::type;
+        using config_type = config<Hs...>;
         using communication_type = communication<I,O>;
     }; 
 

@@ -23,14 +23,31 @@ public:
 
     template <typename ANode>
     static BusinessLogicPtr process(SL("warping_control"),const InterfaceAccessorPtr& p) {
+        using namespace tag;            
         using config_type = typename ANode::config_type;
-        using static_zone_type = tl::nth_element_t<config_type,0>;
-        using ar_zone_type = tl::nth_element_t<config_type,1>;
-        using mat_div_factor_type = typename tl::nth_element_t<config_type,2>::type;
-        using mirror_angle_min_type = typename tl::nth_element_t<config_type,3>::type;
-        using mirror_angle_max_type = typename tl::nth_element_t<config_type,4>::type;
+        using mat_div_factor_type = get_tt<config_type, is_mat_div_factor>;
+        using mirror_angle_min_type = get_tt<config_type, is_mirror_angle_min>;
+        using mirror_angle_max_type = get_tt<config_type, is_mirror_angle_max>;
+        std::cout << "mat_div_factor_type" << mat_div_factor_type::value() << std::endl;
+        std::cout << "mirror_angle_min_type" << mirror_angle_min_type::value() << std::endl;
+        std::cout << "mirror_angle_max_type" << mirror_angle_max_type::value() << std::endl;
 
-        using sz_name_type = typename static_zone_type::name_type;
+        {
+            using static_zone_type = get_t<config_type, is_static_zone>;
+            using name_type = typename static_zone_type::name_type;
+            using width_type = typename static_zone_type::width_type;
+            using height_type = typename static_zone_type::height_type;
+
+            std::cout << "--- static_zone_type ---" << std::endl;
+            std::cout << "name_type" << name_type::value() << std::endl;
+            std::cout << "width_type" << width_type::value() << std::endl;
+            std::cout << "height_type" << height_type::value() << std::endl;
+        }    
+
+
+        using ar_zone_type = get_t<config_type, is_ar_zone>;
+
+
         return {};
     }
 
