@@ -21,18 +21,21 @@ public:
     : interfaces(ptr)
     {}
 
-
     template <typename Zone>
     static auto createZoneData() {
         using name_type = typename Zone::name_type;
         using width_type = typename Zone::width_type;
         using height_type = typename Zone::height_type;
+        using mirror_pos_type = typename Zone::mirror_pos_type;
+        using low_type = typename mirror_pos_type::low_type;
+        using mid_type = typename mirror_pos_type::mid_type;
+        using high_type = typename mirror_pos_type::high_type;
 
         ARCreatorLogic::WarpingControlLogic::ZoneData zone{};
         zone.name = name_type{};
         zone.width = width_type{};
         zone.height = height_type{}; 
-        zone.mirror_pos = {}; // not implemented yet 
+        zone.mirror_pos = {low_type{}, mid_type{}, high_type{} };
         return zone;
     }
 
