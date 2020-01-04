@@ -25,9 +25,9 @@ public:
     static BusinessLogicPtr process(SL("warping_control"),const InterfaceAccessorPtr& p) {
         using namespace tag;            
         using config_type = typename ANode::config_type;
-        using mat_div_factor_type = get_tt<config_type, is_mat_div_factor>;
-        using mirror_angle_min_type = get_tt<config_type, is_mirror_angle_min>;
-        using mirror_angle_max_type = get_tt<config_type, is_mirror_angle_max>;
+        using mat_div_factor_type = get_t<config_type, is_mat_div_factor>;
+        using mirror_angle_min_type = get_t<config_type, is_mirror_angle_min>;
+        using mirror_angle_max_type = get_t<config_type, is_mirror_angle_max>;
         std::cout << "mat_div_factor_type" << (double)mat_div_factor_type{} << std::endl;
         std::cout << "mirror_angle_min_type" << mirror_angle_min_type::value() << std::endl;
         std::cout << "mirror_angle_max_type" << mirror_angle_max_type::value() << std::endl;
