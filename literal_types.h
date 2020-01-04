@@ -19,9 +19,18 @@ struct char_sequence : std::integer_sequence<char, chars...> {
     }
 };
 
+template <typename T>
+struct is_char_sequence : std::false_type {
+};
+
+template <char... chars>
+struct is_char_sequence<char_sequence<chars...>> : std::true_type {
+};
+
+
 template <char... chars>
 struct digit_sequence : char_sequence<chars...> { 
-    static_assert(char_traits::is_digits<chars...>::value,"char is not a digit");
+    static_assert(char_traits::is_digits<chars...>::value,"[digit_sequence]: char is not a digit");
     static long value() {
         char* end{};
         return std::strtol(char_sequence<chars...>::value(), &end, 10);
@@ -31,9 +40,17 @@ struct digit_sequence : char_sequence<chars...> {
     }
 };
 
+template <typename T>
+struct is_digit_sequence : std::false_type {
+};
+
+template <char... chars>
+struct is_digit_sequence<digit_sequence<chars...>> : std::true_type {
+};
+
 template <char... chars>
 struct xdigit_sequence : char_sequence<chars...> { 
-    static_assert(char_traits::is_xdigits<chars...>::value,"char is not a xdigit");
+    static_assert(char_traits::is_xdigits<chars...>::value,"[xdigit_sequence]: char is not a xdigit");
     static long value() {
         char* end{};
         return std::strtol(char_sequence<chars...>::value(), &end, 16);
@@ -43,9 +60,17 @@ struct xdigit_sequence : char_sequence<chars...> {
     }
 };
 
+template <typename T>
+struct is_xdigit_sequence : std::false_type {
+};
+
+template <char... chars>
+struct is_xdigit_sequence<xdigit_sequence<chars...>> : std::true_type {
+};
+
 template <char... chars>
 struct fdigit_sequence : char_sequence<chars...> { 
-    static_assert(char_traits::is_floating_point_digits<chars...>::value,"char is not a floating-point digit sign");
+    static_assert(char_traits::is_floating_point_digits<chars...>::value,"[fdigit_sequence]: char is not a floating-point digit sign");
     static double value() {
         char* end{};
         return std::strtod(char_sequence<chars...>::value(), &end);
@@ -55,11 +80,27 @@ struct fdigit_sequence : char_sequence<chars...> {
     }
 };
 
+template <typename T>
+struct is_fdigit_sequence : std::false_type {
+};
+
+template <char... chars>
+struct is_fdigit_sequence<fdigit_sequence<chars...>> : std::true_type {
+};
+
 template <char... chars>
 struct bdigit_sequence : char_sequence<chars...> { 
-    static_assert(char_traits::is_boolean_digits<chars...>::value,"char is not a boolean digit sign");
+    using base_type = char_sequence<chars...>;
+    static_assert(char_traits::is_boolean_digits<chars...>::value,"[bdigit_sequence]: char is not a boolean digit sign");
+    static_assert(
+            std::is_same<char_sequence<'T','R','U','E'>,base_type>::value 
+        ||  std::is_same<char_sequence<'t','r','u','e'>,base_type>::value 
+        ||  std::is_same<char_sequence<'F','A','L','S','E'>,base_type>::value 
+        ||  std::is_same<char_sequence<'f','a','l','s','e'>,base_type>::value 
+        , "[bdigit_sequence]: literal cannot be represented as boolean type"
+    );
+    
     static bool value() {
-        using base_type = char_sequence<chars...>;
         if(std::is_same<char_sequence<'T','R','U','E'>,base_type>::value)
             return true;
         if(std::is_same<char_sequence<'t','r','u','e'>,base_type>::value)
@@ -70,6 +111,15 @@ struct bdigit_sequence : char_sequence<chars...> {
         return value();
     }
 };
+
+template <typename T>
+struct is_bdigit_sequence : std::false_type {
+};
+
+template <char... chars>
+struct is_bdigit_sequence<bdigit_sequence<chars...>> : std::true_type {
+};
+
 
 }   // namespace literal
 

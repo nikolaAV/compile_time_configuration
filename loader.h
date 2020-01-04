@@ -28,7 +28,7 @@ public:
         using mat_div_factor_type = get_tt<config_type, is_mat_div_factor>;
         using mirror_angle_min_type = get_tt<config_type, is_mirror_angle_min>;
         using mirror_angle_max_type = get_tt<config_type, is_mirror_angle_max>;
-        std::cout << "mat_div_factor_type" << mat_div_factor_type::value() << std::endl;
+        std::cout << "mat_div_factor_type" << (double)mat_div_factor_type{} << std::endl;
         std::cout << "mirror_angle_min_type" << mirror_angle_min_type::value() << std::endl;
         std::cout << "mirror_angle_max_type" << mirror_angle_max_type::value() << std::endl;
 
