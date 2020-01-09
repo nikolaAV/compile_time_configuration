@@ -89,4 +89,6 @@ int main()
     LCE::InterfaceAccessor::InterfaceAccessorPtr dummy{};
     LogicLoader<configuration> loader{dummy};
     auto logics = loader();
+    for(auto l:logics)
+        l->iterate();
 }

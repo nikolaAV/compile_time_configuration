@@ -197,6 +197,15 @@ namespace tag
         using type = tl::list<Nshes...>;
         static_assert(tl::all_of_if<type,is_nshe>::value,"[tag::name] not all Nshes... are nodes_show_hide_element type");
     };
+
+    template <typename T>
+    struct is_nodes_show_hide : std::false_type {  
+    };
+
+    template <typename... Nshes>
+    struct is_nodes_show_hide<nodes_show_hide<Nshes...>> : std::true_type {  
+    };
+
     template <typename T>
     struct name : T {
         static_assert(literal::is_char_sequence<T>::value,"[tag::name] T is not string");
@@ -337,9 +346,9 @@ namespace tag
     template <typename Source, template <typename> class Condition>
     using get_t = typename get<Source,Condition>::type;
 
-    template <template <typename> class Condition, typename... Ts>
-    struct get<config<Ts...>,Condition> {
-        using type = tl::front_t<tl::find_if_t<typename config<Ts...>::type, Condition>>;
+    template <template <typename> class Condition, template <typename...> class TListHost, typename... Ts>
+    struct get<TListHost<Ts...>,Condition> {
+        using type = tl::front_t<tl::find_if_t<typename TListHost<Ts...>::type, Condition>>;
     };
 
 }   // tag namespace

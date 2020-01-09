@@ -83,11 +83,38 @@ public:
         return std::make_shared<ARCreatorLogic::CVirtualCameraLogic>(p,config);
     }
 
+    template <typename Nshe>
+    static auto createNodeShowHide() {
+        using scene_type = typename Nshe::scene_type;
+        using node_type = typename Nshe::node_type;
+        using ar_type = typename Nshe::ar_type;
+
+        ARCreatorLogic::FasClusterLogic::ShowHideNode node{};
+            node.scene = scene_type{};
+            node.node = node_type{};
+            node.ar = ar_type{};
+        return node;
+    }
+
     template <typename ANode>
     static BusinessLogicPtr createLogic(SL("fas_cluster_acc"),const InterfaceAccessorPtr& p ) {
+        using namespace tag;            
         using lib_type = typename ANode::lib_type;
         std::cout << lib_type::value() << std::endl;
-       return {};
+
+        using config_type = typename ANode::config_type;
+        using scene_type = get_t<config_type, is_scene>;
+        using node_type = get_t<config_type, is_node>;
+        using nodes_show_hide_type = get_t<config_type, is_nodes_show_hide>;
+
+        ARCreatorLogic::FasClusterLogic::Config config{};
+            config.scene = scene_type{};
+            config.node = node_type{};
+            tl::rt::for_each<typename nodes_show_hide_type::type>([&config](auto n){
+                using nshe_type = std::remove_pointer_t<decltype(n)>;
+                config.nodes_show_hide.push_back(createNodeShowHide<nshe_type>());
+            });
+        return std::make_shared<ARCreatorLogic::CAccFasClusterLogic>(p,config);;
     }
 
     BusinessLogics operator()() {

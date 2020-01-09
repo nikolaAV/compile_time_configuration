@@ -43,28 +43,28 @@ CWarpingControlLogic::CWarpingControlLogic(
     const LCE::InterfaceAccessor::InterfaceAccessorPtr& interfaces,
     const Config& config)
 {
-    cout << "[WarpingControlLogic] - business logic created!" << endl;
+    cout << "WarpingControlLogic - business logic created!" << endl;
     cout << config << endl;
 }
 
 void CWarpingControlLogic::initialize()
 {
-    cout << "[WarpingControlLogic]::initialize()" << endl;
+    cout << "WarpingControlLogic::initialize()" << endl;
 }
 
 void CWarpingControlLogic::start()
 {
-    cout << "[WarpingControlLogic]::start()" << endl;
+    cout << "WarpingControlLogic::start()" << endl;
 }
 
 void CWarpingControlLogic::iterate()
 {
-    cout << "[WarpingControlLogic]::iterate()" << endl;
+    cout << "WarpingControlLogic::iterate()" << endl;
 }
 
 void CWarpingControlLogic::stop()
 {
-    cout << "[WarpingControlLogic]::stop()" << endl;
+    cout << "WarpingControlLogic::stop()" << endl;
 }
 
 } // namespace ARCreatorLogic
