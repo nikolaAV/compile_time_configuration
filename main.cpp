@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 #include "tag_types.h"
+#include "messages.h"
 #include "loader.h"
 
 /*
@@ -53,7 +54,9 @@ using configuration = tl::list<
         >
         ,communication<
             inputs<>
-            ,outputs<SL("eye_box_settings_changed_out")>
+            ,outputs<
+                SL("eye_box_settings_changed_out")
+            >
         >
    >
    ,anode<
@@ -70,7 +73,13 @@ using configuration = tl::list<
         >
         ,communication<
              inputs<>
-            ,outputs<SL("acc_fas_cluster_on_off"),SL("acc_fas_cluster_hide_show_sl"),SL("acc_fas_cluster_hide_show_ar"), SL("acc_fas_cluster_pea_hidden_shown"), SL("acc_fas_cluster_pea_radar_waves_hidden_shown")>
+            ,outputs<
+                 SL("acc_fas_cluster_on_off")
+                ,SL("acc_fas_cluster_hide_show_sl")
+                ,SL("acc_fas_cluster_hide_show_ar")
+                ,SL("acc_fas_cluster_pea_hidden_shown")
+                ,SL("acc_fas_cluster_pea_radar_waves_hidden_shown")
+            >
         >
    >
 >;
