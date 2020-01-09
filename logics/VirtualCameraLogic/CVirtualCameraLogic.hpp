@@ -11,6 +11,10 @@ namespace ARCreatorLogic {
 //    EyeBoxSettingsChanged,
 //    "eye_box_settings_changed_out")
 
+struct EyeBoxSettingsChanged 
+{
+}; 
+
 ///
 /// @brief The CVirtualCameraLogic class controls virtual camera pose on AR scene
 ///

@@ -32,36 +32,55 @@ public:
         using high_type = typename mirror_pos_type::high_type;
 
         ARCreatorLogic::WarpingControlLogic::ZoneData zone{};
-        zone.name = name_type{};
-        zone.width = width_type{};
-        zone.height = height_type{}; 
-        zone.mirror_pos = {low_type{}, mid_type{}, high_type{} };
+            zone.name = name_type{};
+            zone.width = width_type{};
+            zone.height = height_type{}; 
+            zone.mirror_pos = {low_type{}, mid_type{}, high_type{} };
         return zone;
     }
 
     template <typename ANode>
     static BusinessLogicPtr createLogic(SL("warping_control"),const InterfaceAccessorPtr& p) {
         using namespace tag;            
+        using lib_type = typename ANode::lib_type;
+        std::cout << lib_type::value() << std::endl;
+
         using config_type = typename ANode::config_type;
         using mat_div_factor_type = get_t<config_type, is_mat_div_factor>;
         using mirror_angle_min_type = get_t<config_type, is_mirror_angle_min>;
         using mirror_angle_max_type = get_t<config_type, is_mirror_angle_max>;
 
         ARCreatorLogic::WarpingControlLogic::Config config{};
-        config.static_zone = createZoneData<get_t<config_type, is_static_zone>>();
-        config.ar_zone = createZoneData<get_t<config_type, is_ar_zone>>();
-        config.mat_div_factor = mat_div_factor_type{}; 
-        config.mirror_angle_min = mirror_angle_min_type{}; 
-        config.mirror_angle_max = mirror_angle_max_type{}; 
+            config.static_zone = createZoneData<get_t<config_type, is_static_zone>>();
+            config.ar_zone = createZoneData<get_t<config_type, is_ar_zone>>();
+            config.mat_div_factor = mat_div_factor_type{}; 
+            config.mirror_angle_min = mirror_angle_min_type{}; 
+            config.mirror_angle_max = mirror_angle_max_type{}; 
 
         return std::make_shared<ARCreatorLogic::CWarpingControlLogic>(p,config);
     }
 
     template <typename ANode>
     static BusinessLogicPtr createLogic(SL("virtual_camera"),const InterfaceAccessorPtr& p ) {
+        using namespace tag;            
         using lib_type = typename ANode::lib_type;
         std::cout << lib_type::value() << std::endl;
-        return {};
+
+        using config_type = typename ANode::config_type;
+        using communication_type = typename ANode::communication_type;
+        using scene_type = get_t<config_type, is_scene>;
+        using mirror_angles_type = get_t<config_type, is_mirror_angles>;
+        using min_type = typename mirror_angles_type::min_type;
+        using max_type = typename mirror_angles_type::max_type;
+
+        ARCreatorLogic::VirtualCamera::MirrorAngles angles{};
+            angles.min = min_type{};
+            angles.max = max_type{};
+        ARCreatorLogic::VirtualCamera::Config config{};
+        config.scene = scene_type{};    
+        config.mirror_angles = angles;
+
+        return std::make_shared<ARCreatorLogic::CVirtualCameraLogic>(p,config);
     }
 
     template <typename ANode>
