@@ -106,6 +106,16 @@ public:
         using scene_type = get_t<config_type, is_scene>;
         using node_type = get_t<config_type, is_node>;
         using nodes_show_hide_type = get_t<config_type, is_nodes_show_hide>;
+        using communication_type = typename ANode::communication_type;
+        using inputs_type = typename communication_type::inputs_type;
+        using outputs_type = typename communication_type::outputs_type;
+
+        using on_off_type = tl::nth_element_t<typename outputs_type::type,0>;
+        ARCreatorLogic::make_message<typename on_off_type::id_type, typename on_off_type::data_type>(true);
+        using hide_show_ar_type = tl::nth_element_t<typename outputs_type::type,2>;
+        ARCreatorLogic::make_message<typename hide_show_ar_type::id_type, typename hide_show_ar_type::data_type>("some text", false);
+        using pea_hidden_shown_type = tl::nth_element_t<typename outputs_type::type,3>;
+        ARCreatorLogic::make_message<typename pea_hidden_shown_type::id_type, typename pea_hidden_shown_type::data_type>(false);
 
         ARCreatorLogic::FasClusterLogic::Config config{};
             config.scene = scene_type{};

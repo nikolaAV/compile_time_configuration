@@ -1,7 +1,7 @@
 #include <string>
 #include <iostream>
+#include "logics/include/messages.h"
 #include "tag_types.h"
-#include "messages.h"
 #include "loader.h"
 
 /*
@@ -15,6 +15,7 @@
 // Example of usage
 
 using namespace tag;
+using namespace ARCreatorLogic;
 
 using configuration = tl::list<
     anode<
@@ -55,7 +56,7 @@ using configuration = tl::list<
         ,communication<
             inputs<>
             ,outputs<
-                SL("eye_box_settings_changed_out")
+                msg<SL("eye_box_settings_changed_out"),EyeBoxSettingsChanged>
             >
         >
    >
@@ -74,11 +75,11 @@ using configuration = tl::list<
         ,communication<
              inputs<>
             ,outputs<
-                 SL("acc_fas_cluster_on_off")
-                ,SL("acc_fas_cluster_hide_show_sl")
-                ,SL("acc_fas_cluster_hide_show_ar")
-                ,SL("acc_fas_cluster_pea_hidden_shown")
-                ,SL("acc_fas_cluster_pea_radar_waves_hidden_shown")
+                 msg<SL("acc_fas_cluster_on_off"),OnOff>
+                ,msg<SL("acc_fas_cluster_hide_show_sl"),HiddenShown>
+                ,msg<SL("acc_fas_cluster_hide_show_ar"),HiddenShown>
+                ,msg<SL("acc_fas_cluster_pea_hidden_shown"),HiddenShownEvent>
+                ,msg<SL("acc_fas_cluster_pea_radar_waves_hidden_shown"),HiddenShownEvent>
             >
         >
    >

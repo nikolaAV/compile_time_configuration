@@ -232,9 +232,26 @@ namespace tag
     struct is_lib<lib<T>> : std::true_type {  
     };
 
+    template <typename T, typename U>
+    struct msg {
+        using id_type = T;
+        using data_type = U;
+
+        static_assert(literal::is_char_sequence<T>::value,"[tag::msg] T is not string");
+    };
+
+    template <typename T>
+    struct is_msg : std::false_type {  
+    };
+
+    template <typename T, typename U>
+    struct is_msg<msg<T,U>> : std::true_type {  
+    };
+
     template <typename... Ts>
     struct inputs {
         using type = tl::list<Ts...>;
+        static_assert(tl::all_of_if<type,is_msg>::value,"[tag::inputs] not all Ts... are 'msg' type");
     };
 
     template <typename T>
@@ -248,6 +265,7 @@ namespace tag
     template <typename... Ts>
     struct outputs {
         using type = tl::list<Ts...>;
+        static_assert(tl::all_of_if<type,is_msg>::value,"[tag::outputs] not all Ts... are 'msg' type");
     };
 
     template <typename T>
