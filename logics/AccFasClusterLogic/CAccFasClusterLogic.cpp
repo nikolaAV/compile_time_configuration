@@ -33,7 +33,9 @@ ostream& operator<<(ostream& out, const Config& data)
 
 CAccFasClusterLogic::CAccFasClusterLogic(
     const LCE::InterfaceAccessor::InterfaceAccessorPtr& interface_accessor,
-    const FasClusterLogic::Config& config)
+    const FasClusterLogic::Config& config,
+    MessageBox&& message_box)
+    : message_box_(std::move(message_box))
 {
     cout << "CAccFasClusterLogic - business logic created!" << endl;
     cout << config << endl;
@@ -53,6 +55,8 @@ void CAccFasClusterLogic::start()
 void CAccFasClusterLogic::iterate()
 {
     cout << "CAccFasClusterLogic::iterate()" << endl;
+    for(const auto& m : message_box_)
+        m->send();
 }
 
 void CAccFasClusterLogic::stop()

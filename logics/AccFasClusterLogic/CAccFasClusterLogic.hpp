@@ -3,6 +3,7 @@
 #include "Config.hpp"
 #include "../include/IInterfaceAccessor.hpp"
 #include "../include/IBusinessLogic.hpp"
+#include "../include/IMessage.hpp"
 
 namespace ARCreatorLogic {
 
@@ -41,6 +42,8 @@ ILC_DEFINE_IO_TYPE(
 ///
 class CAccFasClusterLogic : public LCE::Logic::IBusinessLogic
 {
+    MessageBox message_box_;
+
 public: // methods
     ///
     /// @brief CAccFasClusterLogic constructor
@@ -49,7 +52,8 @@ public: // methods
     ///
     CAccFasClusterLogic(
         const LCE::InterfaceAccessor::InterfaceAccessorPtr& interface_accessor,
-        const FasClusterLogic::Config& config);
+        const FasClusterLogic::Config& config,
+        MessageBox&& message_box);
 
     ///
     /// @brief initialize Fetch controlled scene nodes
