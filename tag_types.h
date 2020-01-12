@@ -369,6 +369,56 @@ namespace tag
         using type = tl::front_t<tl::find_if_t<typename TListHost<Ts...>::type, Condition>>;
     };
 
+    template <typename Source>
+    using get_name_t = typename Source::name_type;
+
+    template <typename Source>
+    using get_width_t = typename Source::width_type;
+
+    template <typename Source>
+    using get_height_t = typename Source::height_type;
+
+    template <typename Source>
+    using get_mirror_pos_t = typename Source::mirror_pos_type;
+
+    template <typename Source>
+    using get_low_t = typename Source::low_type;
+
+    template <typename Source>
+    using get_mid_t = typename Source::mid_type;
+
+    template <typename Source>
+    using get_high_t = typename Source::high_type;
+
+    template <typename Source>
+    using get_lib_t = typename Source::lib_type;
+
+    template <typename Source>
+    using get_config_t = typename Source::config_type;
+
+    template <typename Source>
+    using get_communication_t = typename Source::communication_type;
+
+    template <typename Source>
+    using get_min_t = typename Source::min_type;
+
+    template <typename Source>
+    using get_max_t = typename Source::max_type;
+
+    template <typename Source>
+    using get_scene_t = typename Source::scene_type;
+
+    template <typename Source>
+    using get_node_t = typename Source::node_type;
+
+    template <typename Source>
+    using get_ar_t = typename Source::ar_type;
+
+    template <typename Source>
+    using get_inputs_t = typename Source::inputs_type;
+    template <typename Source>
+    using get_outputs_t = typename Source::outputs_type;
+
 }   // tag namespace
 
 // clang-format on
