@@ -3,6 +3,8 @@
 #include "Config.hpp"
 #include "../include/IInterfaceAccessor.hpp"
 #include "../include/IBusinessLogic.hpp"
+#include "../include/IMessage.hpp"
+
 
 namespace ARCreatorLogic {
 
@@ -16,6 +18,8 @@ namespace ARCreatorLogic {
 ///
 class CVirtualCameraLogic : public LCE::Logic::IBusinessLogic
 {
+    MessageBox message_box_;
+
 public: // methods
     ///
     /// @brief CVirtualCameraLogic constructor
@@ -24,7 +28,8 @@ public: // methods
     ///
     explicit CVirtualCameraLogic(
         const LCE::InterfaceAccessor::InterfaceAccessorPtr& interface_accessor,
-        const VirtualCamera::Config& config);
+        const VirtualCamera::Config& config,
+        MessageBox&& message_box);
 
     ///
     /// @brief initialize Fetch controlled scene graph

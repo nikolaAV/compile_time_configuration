@@ -419,6 +419,24 @@ namespace tag
     template <typename Source>
     using get_outputs_t = typename Source::outputs_type;
 
+    template <typename Source>
+    using get_id_t = typename Source::id_type;
+
+    template <typename Source>
+    using get_data_t = typename Source::data_type;
+
+    template <typename TList, typename F, typename... Args>
+    std::enable_if_t<tl::is_list<TList>::value,F> 
+    for_each(F f, Args&&... args) {
+        return tl::rt::for_each<TList>(std::move(f),args...);
+    }
+
+    template <typename TList, typename F, typename... Args>
+    std::enable_if_t<!tl::is_list<TList>::value,F> 
+    for_each(F f, Args&&... args) {
+        return tl::rt::for_each<typename TList::type>(std::move(f),args...);
+    }
+
 }   // tag namespace
 
 // clang-format on

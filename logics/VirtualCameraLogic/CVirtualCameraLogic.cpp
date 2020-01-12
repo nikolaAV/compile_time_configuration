@@ -25,7 +25,9 @@ ostream& operator<<(ostream& out, const Config& data)
 
 CVirtualCameraLogic::CVirtualCameraLogic(
     const LCE::InterfaceAccessor::InterfaceAccessorPtr& interface_accessor,
-    const VirtualCamera::Config& config)
+    const VirtualCamera::Config& config,
+    MessageBox&& message_box)
+    : message_box_(std::move(message_box))
 {
     std::cout << "CVirtualCameraLogic - business logic created!" << std::endl;
     cout << config << endl;
@@ -44,6 +46,8 @@ void CVirtualCameraLogic::start()
 void CVirtualCameraLogic::iterate()
 {
     std::cout << "CVirtualCameraLogic::iterate()" << std::endl;
+    for(const auto& m : message_box_)
+        m->send();
 }
 
 void CVirtualCameraLogic::stop()
