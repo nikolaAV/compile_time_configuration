@@ -79,10 +79,10 @@ auto make_message() {
 
 template <typename Configuration>
 class LogicLoader {
-    const InterfaceAccessorPtr& interfaces;
+    InterfaceAccessorPtr interfaces;
 
 public:
-    LogicLoader(const LCE::InterfaceAccessor::InterfaceAccessorPtr& ptr)
+    LogicLoader(LCE::InterfaceAccessor::InterfaceAccessorPtr ptr)
     : interfaces(ptr)
     {}
 
@@ -143,11 +143,11 @@ public:
 
     BusinessLogics operator()() {
         BusinessLogics logics;
-        for_each<Configuration>([&logics, &interfaces = interfaces](auto n){
+        for_each<Configuration>([&logics, interfaces = interfaces](auto n){
             using node_type = std::remove_pointer_t<decltype(n)>;
             std::cout << get_lib_t<node_type>::value() << std::endl;
             logics.push_back(
-                createLogic<node_type>(get_name_t<node_type>{}, interfaces)
+                LogicLoader::createLogic<node_type>(get_name_t<node_type>{}, interfaces)
             );    
         });
         return logics;
